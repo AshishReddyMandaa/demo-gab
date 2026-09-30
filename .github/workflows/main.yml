@@ -1,9 +1,6 @@
 name: Enterprise CI Pipeline 
 
  
-# ─────────────────────────────────────────────
-# Trigger
-# ─────────────────────────────────────────────
 on:
   push:
     branches:
@@ -18,37 +15,8 @@ on:
       - develop
   workflow_dispatch:
 
-# ─────────────────────────────────────────────
-# Default Permissions (Least Privilege)
-# ─────────────────────────────────────────────
-permissions:
-  contents: read
-  security-events: write
-  actions: read
-  checks: write
-  packages: write
-  id-token: write
-
-# ─────────────────────────────────────────────
-# Prevent Parallel Builds
-# ─────────────────────────────────────────────
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
-
-# ─────────────────────────────────────────────
-# Global Environment Variables
-# ─────────────────────────────────────────────
-env:
-  NODE_VERSION: "22"
-  IMAGE_NAME:  ${{ secrets.DOCKER_USER }}/zomato_new
-  IMAGE_TAG: ${{ github.sha }}
 
 jobs:
-
-  # ───────────────────────────────────────────
-  # JOB 1: Build React Application
-  # ───────────────────────────────────────────
   build:
     name: Build React Application
     runs-on: ubuntu-latest
@@ -79,5 +47,12 @@ jobs:
       - name: deploy
         run: echo "code is deployed"
 
+      - name: Artifact upload 
+        uses: actions/upload-artifact@v7 
+        with: 
+          name: artifact-1 
+          path: | 
+            package* 
+          retention-days: 7
 
 
