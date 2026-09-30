@@ -18,6 +18,7 @@ on:
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     name: Build React Application
     runs-on: ${{ matrix.os }}
     strategy:
