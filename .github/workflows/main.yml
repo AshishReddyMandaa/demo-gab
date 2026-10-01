@@ -15,6 +15,11 @@ on:
       - develop
   workflow_dispatch:
 
+permissions: 
+  actions: read 
+  contents: read 
+  security-events: write # Required to upload findings to the Security tab 
+  
 
 jobs:
   build:
@@ -23,8 +28,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        node-version: [18, 20, 22]
+        os: [ubuntu-latest]
+        language: ['javascript-typescript']
     timeout-minutes: 20
     defaults:
       run:
@@ -43,7 +48,20 @@ jobs:
           restore-keys: | 
             ${{ runner.os }}-node-${{ matrix.node-version }}- 
 
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
 
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+         category: "/language:${{matrix.language}}"
+
+        
       - name: Install Dependencies
         run: npm ci
 
