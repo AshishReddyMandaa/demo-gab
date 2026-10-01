@@ -18,7 +18,7 @@ on:
 
 jobs:
   build:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.event_name == 'workflow_dispatch' || (github.ref == 'refs/heads/master' && github.event_name == 'push')
     name: Build React Application
     runs-on: ${{ matrix.os }}
     strategy:
