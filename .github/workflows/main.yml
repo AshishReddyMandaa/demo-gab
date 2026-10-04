@@ -1,23 +1,28 @@
+name: Matrix Job Practice
 
-version: 2
+on:
+  push:
+    branches:
+      - devops-practice
+  workflow_dispatch:
 
-  updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    target-branch: "devops-practice"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
-      - "npm"
+jobs:
+  test:
+    name: Test on Node.js
+    runs-on: ubuntu-latest
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    target-branch: "devops-practice"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
-      - "github-actions"
+    strategy:
+      matrix:
+        node-version: [20, 22]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Show Node.js Version
+        run: node --version
