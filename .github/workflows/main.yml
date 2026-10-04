@@ -1,4 +1,4 @@
-name: Conditions Practice
+name: Status Check Practice
 
 on:
   push:
@@ -7,20 +7,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  conditions:
+  status-checks:
     runs-on: ubuntu-latest
     steps:
+      - name: Successful Step
+        run: echo "This step succeeds"
+
+      - name: Run on Success
+        if: success()
+        run: echo "Previous step succeeded"
+
+      - name: Run on Failure
+        if: failure()
+        run: echo "A previous step failed"
+
       - name: Always Run
-        run: echo "This step runs."
-
-      - name: Run Only on Push
-        if: github.event_name == 'push'
-        run: echo "This is a push event."
-
-      - name: Run Only on Manual Trigger
-        if: github.event_name == 'workflow_dispatch'
-        run: echo "This is a manual run."
-
-      - name: Run Only on devops-practice
-        if: github.ref == 'refs/heads/devops-practice'
-        run: echo "We are on the practice branch."
+        if: always()
+        run: echo "This step runs regardless"
