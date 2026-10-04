@@ -1,4 +1,4 @@
-name: Matrix Job Practice
+name: Conditions Practice
 
 on:
   push:
@@ -7,22 +7,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    name: Test on Node.js
+  conditions:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20, 22]
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Always Run
+        run: echo "This step runs."
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
+      - name: Run Only on Push
+        if: github.event_name == 'push'
+        run: echo "This is a push event."
 
-      - name: Show Node.js Version
-        run: node --version
+      - name: Run Only on Manual Trigger
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "This is a manual run."
+
+      - name: Run Only on devops-practice
+        if: github.ref == 'refs/heads/devops-practice'
+        run: echo "We are on the practice branch."
