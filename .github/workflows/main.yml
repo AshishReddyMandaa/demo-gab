@@ -8,11 +8,13 @@ on:
       - master
       - develop
       - devops-practice
+
   pull_request:
     branches:
       - main
       - master
       - develop
+
   workflow_dispatch:
 
 jobs:
@@ -53,3 +55,23 @@ jobs:
           name: react-build
           path: build/
           retention-days: 7
+
+  security:
+    name: CodeQL Security Scan
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
