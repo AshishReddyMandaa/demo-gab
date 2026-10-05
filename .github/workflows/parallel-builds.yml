@@ -1,0 +1,35 @@
+name: Parallel Builds Practice
+
+on:
+  push:
+    branches:
+      - devops-practice
+  workflow_dispatch:
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Backend
+        run: |
+          echo "Backend build started"
+          sleep 5
+          echo "Backend build completed"
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Frontend
+        run: |
+          echo "Frontend build started"
+          sleep 5
+          echo "Frontend build completed"
+
+  build-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Docker Image
+        run: |
+          echo "Docker build started"
+          sleep 5
+          echo "Docker build completed"
