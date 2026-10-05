@@ -1,6 +1,9 @@
 name: Sequential Parallel Practice
 
 on:
+  push:
+    branches:
+      - devops-practice
   workflow_dispatch:
 
 jobs:
