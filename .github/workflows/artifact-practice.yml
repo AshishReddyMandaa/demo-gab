@@ -1,0 +1,20 @@
+name: Artifact Practice
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create artifact file
+        run: |
+          echo "Hello from GitHub Actions" > build-output.txt
+          echo "Build completed successfully" >> build-output.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: build-output.txt
