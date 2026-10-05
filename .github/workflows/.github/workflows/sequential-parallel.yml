@@ -1,0 +1,41 @@
+name: Sequential Parallel Practice
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        run: |
+          echo "Build started"
+          sleep 5
+          echo "Build completed"
+
+  unit-test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Unit Test
+        run: |
+          echo "Unit tests started"
+          sleep 5
+          echo "Unit tests completed"
+
+  security-test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Security Test
+        run: |
+          echo "Security tests started"
+          sleep 5
+          echo "Security tests completed"
+
+  deploy:
+    needs: [unit-test, security-test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo "Deployment completed"
