@@ -1,0 +1,17 @@
+name: Self Hosted Practice
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-runner:
+    runs-on: self-hosted
+
+    steps:
+      - name: Check runner
+        run: |
+          echo "Running on self-hosted runner"
+          echo "Hostname:"
+          hostname
+          echo "OS:"
+          uname -a
