@@ -29,6 +29,7 @@ jobs:
         with:
           name: application-build
           path: build/
+          retention-days: 5
 
   test:
     needs: build
