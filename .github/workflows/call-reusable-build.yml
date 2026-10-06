@@ -9,3 +9,5 @@ on:
 jobs:
   call-build:
     uses: AshishReddyMandaa/demo-gab/.github/workflows/reusable-build.yml@devops-practice
+    with:
+      environment: "dev"
