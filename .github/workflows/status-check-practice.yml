@@ -1,0 +1,30 @@
+name: Status Check Practice
+
+on:
+  push:
+    branches:
+      - devops-practice
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Successful Test
+        run: |
+          echo "Running tests..."
+          sleep 3
+          echo "Tests passed"
+
+      - name: Run Only If Previous Steps Succeeded
+        if: success()
+        run: echo "All previous steps succeeded"
+
+      - name: Run Only If Something Failed
+        if: failure()
+        run: echo "A previous step failed"
+
+      - name: Always Run
+        if: always()
+        run: echo "This step always runs"
