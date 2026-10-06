@@ -15,7 +15,8 @@ jobs:
         run: |
           echo "Running tests..."
           sleep 3
-          echo "Tests passed"
+          echo "Tests failed"
+          exit 1
 
       - name: Run Only If Previous Steps Succeeded
         if: success()
