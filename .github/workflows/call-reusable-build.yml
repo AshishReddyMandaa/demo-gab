@@ -1,0 +1,11 @@
+name: Call Reusable Build
+
+on:
+  push:
+    branches:
+      - devops-practice
+  workflow_dispatch:
+
+jobs:
+  call-build:
+    uses: AshishReddyMandaa/demo-gab/.github/workflows/reusable-build.yml@devops-practice
