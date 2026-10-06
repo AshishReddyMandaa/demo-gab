@@ -11,16 +11,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Create Build File
+      - name: Create Build Directory
         run: |
-          echo "Hello from the build job" > build-output.txt
-          echo "Build completed successfully" >> build-output.txt
+          mkdir -p build/config
 
-      - name: Upload Build Artifact
+          echo "Application build completed" > build/app.txt
+          echo "Version 1.0.0" > build/version.txt
+          echo "Environment=dev" > build/config/app-config.txt
+
+      - name: Show Build Files
+        run: |
+          echo "Build files:"
+          find build -type f -print
+
+      - name: Upload Build Directory
         uses: actions/upload-artifact@v4
         with:
-          name: build-output
-          path: build-output.txt
+          name: application-build
+          path: build/
 
   test:
     needs: build
@@ -30,9 +38,21 @@ jobs:
       - name: Download Build Artifact
         uses: actions/download-artifact@v4
         with:
-          name: build-output
+          name: application-build
+          path: downloaded-build
 
-      - name: Read Build Artifact
+      - name: Show Downloaded Files
         run: |
-          echo "Contents of artifact:"
-          cat build-output.txt
+          echo "Downloaded files:"
+          find downloaded-build -type f -print
+
+      - name: Read Build Files
+        run: |
+          echo "Application:"
+          cat downloaded-build/app.txt
+
+          echo "Version:"
+          cat downloaded-build/version.txt
+
+          echo "Configuration:"
+          cat downloaded-build/config/app-config.txt
