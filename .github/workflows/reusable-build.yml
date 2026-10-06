@@ -1,0 +1,14 @@
+name: Reusable Build
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Application
+        run: |
+          echo "Reusable build started"
+          sleep 5
+          echo "Reusable build completed"
