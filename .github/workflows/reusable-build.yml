@@ -9,9 +9,17 @@ on:
         type: string
         default: "dev"
 
+    outputs:
+      build-status:
+        description: "Result of the reusable build"
+        value: ${{ jobs.build.outputs.status }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    outputs:
+      status: ${{ steps.build-result.outputs.status }}
 
     steps:
       - name: Build Application
@@ -20,3 +28,7 @@ jobs:
           echo "Building for environment: ${{ inputs.environment }}"
           sleep 5
           echo "Reusable build completed"
+
+      - name: Set Build Result
+        id: build-result
+        run: echo "status=SUCCESS" >> "$GITHUB_OUTPUT"
