@@ -14,18 +14,19 @@ jobs:
       - name: Successful Test
         run: |
           echo "Running tests..."
-          sleep 3
-          echo "Tests failed"
-          exit 1
+          echo "Tests passed"
 
       - name: Run Only If Previous Steps Succeeded
         if: success()
-        run: echo "All previous steps succeeded"
+        run: echo "Previous steps succeeded."
 
       - name: Run Only If Something Failed
         if: failure()
-        run: echo "A previous step failed"
+        run: echo "Something failed."
 
       - name: Always Run
         if: always()
-        run: echo "This step always runs"
+        run: echo "This step always runs."
+
+      - name: Complete job
+        run: echo "Status check practice completed successfully."
