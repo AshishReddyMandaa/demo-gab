@@ -2,13 +2,21 @@ name: Reusable Build
 
 on:
   workflow_call:
+    inputs:
+      environment:
+        description: "Environment to build for"
+        required: false
+        type: string
+        default: "dev"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Build Application
         run: |
           echo "Reusable build started"
+          echo "Building for environment: ${{ inputs.environment }}"
           sleep 5
           echo "Reusable build completed"
