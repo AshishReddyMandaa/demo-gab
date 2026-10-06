@@ -1,6 +1,9 @@
 name: Artifact Practice
 
 on:
+  push:
+    branches:
+      - devops-practice
   workflow_dispatch:
 
 jobs:
@@ -8,13 +11,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Create artifact file
+      - name: Create Build File
         run: |
-          echo "Hello from GitHub Actions" > build-output.txt
+          echo "Hello from the build job" > build-output.txt
           echo "Build completed successfully" >> build-output.txt
 
-      - name: Upload artifact
+      - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-output
           path: build-output.txt
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+
+      - name: Read Build Artifact
+        run: |
+          echo "Contents of artifact:"
+          cat build-output.txt
