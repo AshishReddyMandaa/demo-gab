@@ -1,5 +1,0 @@
-FROM nginx:alpine
-
-RUN echo '<h1>Docker Hub Practice</h1><p>Deployed using GitHub Actions!</p>' > /usr/share/nginx/html/index.html
-
-EXPOSE 80
