@@ -31,18 +31,23 @@ jobs:
 
     steps:
       - name: Show Environment
-        run: echo "Environment: ${{ inputs.environment }}"
+        run: |
+          echo "Environment: ${{ inputs.environment }}"
 
       - name: Show Version
-        run: echo "Version: ${{ inputs.version }}"
+        run: |
+          echo "Version: ${{ inputs.version }}"
 
       - name: Show Deploy Choice
-        run: echo "Deploy: ${{ inputs.deploy }}"
+        run: |
+          echo "Deploy: ${{ inputs.deploy }}"
 
       - name: Deploy
         if: ${{ inputs.deploy }}
-        run: echo "Deploying version ${{ inputs.version }} to ${{ inputs.environment }}"
+        run: |
+          echo "Deploying version ${{ inputs.version }} to ${{ inputs.environment }}"
 
       - name: Skip Deployment
         if: ${{ !inputs.deploy }}
-        run: echo "Deployment skipped."
+        run: |
+          echo "Deployment skipped."
